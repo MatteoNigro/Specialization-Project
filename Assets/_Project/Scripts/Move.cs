@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Move : MonoBehaviour
 {
@@ -11,10 +13,12 @@ public class Move : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         playerInputActions = new PlayerInputActions();
-        playerInputActions.Player.Enable();
+        playerInputActions.Player.Movement.Enable();
     }
 
-    private void Update()
+
+
+    public void Update()
     {
         Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
         rigidbody.velocity = new Vector2(inputVector.x * speed, 0);

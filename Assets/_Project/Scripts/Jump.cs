@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Jump : MonoBehaviour
 {
     private Rigidbody2D rigidbody;
     [SerializeField] private float height;
-    PlayerInputActions playerInputActions;
-    private InputAction jump;
+    private PlayerInputActions playerInputActions;
 
     private void Awake()
     {
@@ -17,19 +18,18 @@ public class Jump : MonoBehaviour
 
     private void OnEnable()
     {
-        jump = playerInputActions.Player.Jump;
-        jump.Enable();
-        jump.performed += Jumping;
+        playerInputActions.Player.Jump.Enable();
+        playerInputActions.Player.Jump.performed += Jumping;
     }
+
 
     private void OnDisable()
     {
-        jump.Disable();
+        playerInputActions.Player.Jump.Disable();
     }
 
     public void Jumping(InputAction.CallbackContext context)
     {
-        var jumpInputAmount = context.ReadValue<Vector2>();
-        rigidbody.AddForce(jumpInputAmount * height, ForceMode2D.Impulse);
+        rigidbody.velocity = Vector2.up * height;
     }
 }
